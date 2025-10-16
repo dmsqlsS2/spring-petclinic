@@ -5,7 +5,7 @@ pipeline {
     //GitHub Clone
     stage('Git Clone') {
       steps {
-        git url: '', branch: 'main'
+        git url: 'https://github.com/dmsqlsS2/spring-petclinic.git', branch: 'main'
       }
     }
   }

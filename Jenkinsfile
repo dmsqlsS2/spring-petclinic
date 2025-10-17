@@ -48,6 +48,16 @@ pipeline {
 
     //Docker Image Remove
     stage ('Docker Image Remove') {
+      steps {        
+        sh """
+        docker rmi spring-petclinic:$BUILD_NUMBER
+        docker rmi dmsqls/spring-petclinic:latest
+        """
+      }
+    }
+
+    //Target Sserver Docker Container
+    stage ('Docker Container') {
       steps {
         sshPublisher(publishers: [sshPublisherDesc(configName: 'target',
         transfers: [sshTransfer(cleanRemote: false,
@@ -68,20 +78,7 @@ pipeline {
         usePromotionTimestamp: false,
         useWorkspaceInPromotion: false,
         verbose: false)])
-      sh """
-      docker rmi spring-petclinic:$BUILD_NUMBER
-      docker rmi dmsqls/spring-petclinic:latest
-      """
       }
-    }
-
-    //Target Sserver Docker Container
-    stage ('Docker Container') {
-      steps {
-        
-      }
-    }
-
-    
+    }    
   }
 }
